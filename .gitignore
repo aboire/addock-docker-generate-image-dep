@@ -1,4 +1,5 @@
-/addok-data
+/addok-data/addok.db
+/addok-data/dump.rdb
 /dist
 /data
 /logs
