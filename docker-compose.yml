@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  addok:
+    image: communecter/addok
+    ports:
+    - "7878:7878"
+    volumes:
+    - ./addok-data/addok.conf:/etc/addok/addok.conf
+    - ./addok-data/addok.db:/data/addok.db
+    - ./logs:/logs
+    links:
+    - addok-redis:redis
+    environment:
+      WORKERS: 1
+      WORKER_TIMEOUT: 30
+      LOG_QUERIES: 0
+      LOG_NOT_FOUND: 0
+      SLOW_QUERIES: 200
+  addok-redis:
+    image: communecter/addok-redis
+    privileged: true
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+    - ./addok-data/dump.rdb:/data/dump.rdb
