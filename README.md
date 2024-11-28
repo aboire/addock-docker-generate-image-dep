@@ -27,10 +27,12 @@ Le script `run.sh` génère trois types d'images Docker pour chaque département
 
 ### Source des images
 
-Les images de base utilisées pour générer celles de ce projet proviennent de votre fork Addok, disponible ici :  
+Les images de base utilisées pour générer celles de ce projet proviennent de ce repository : 
 [aboire/addok-docker](https://github.com/aboire/addok-docker)
 
 Les templates et configurations sont adaptés à partir de ce fork.
+
+vous pouvez consulter le [README](https://github.com/aboire/addok-docker/blob/master/README.md) original pour plus d'informations sur les images de base.
 
 ## Prérequis
 
