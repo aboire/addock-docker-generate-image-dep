@@ -24,8 +24,9 @@ echo ">>> Arrêt du service Addok"
 docker-compose down || error_exit "Échec lors de l'arrêt du service Addok"
 
 # Étape 3 : Supprimer l'ancien répertoire de données
-echo ">>> Suppression de l'ancien répertoire ./addok-data et ./logs"
-sudo rm -Rf ./addok-data || error_exit "Impossible de supprimer ./addok-data"
+echo ">>> Suppression de ./addok-data/addok.db et ./addok-data/dump.rdb et ./logs"
+sudo rm -f ./addok-data/addok.db || error_exit "Impossible de supprimer ./addok-data/addok.db"
+sudo rm -f ./addok-data/dump.rdb || error_exit "Impossible de supprimer ./addok-data/dump.rdb "
 sudo rm -Rf ./logs || error_exit "Impossible de supprimer ./logs"
 
 # Étape 4 : Vérifier que le fichier bundle existe
@@ -34,19 +35,9 @@ if [ ! -f "./dist/prebuilt-bundle.zip" ]; then
 fi
 echo ">>> Fichier ./dist/prebuilt-bundle.zip trouvé avec succès"
 
-# Étape 5 : Créer le répertoire addok-data si nécessaire
-if [ ! -d "./addok-data" ]; then
-  echo ">>> Création du répertoire ./addok-data"
-  mkdir -p ./addok-data || error_exit "Impossible de créer le répertoire ./addok-data"
-fi
-
-# Étape 6 : Décompresser le bundle dans ./addok-data
+# Étape 5 : Décompresser le bundle dans ./addok-data
 echo ">>> Décompression de ./dist/prebuilt-bundle.zip dans ./addok-data"
 unzip -o ./dist/prebuilt-bundle.zip -d ./addok-data || error_exit "Échec lors de la décompression du fichier bundle"
-
-# Étape 7 : Relancer le service Addok
-# echo ">>> Lancement du service Addok"
-# docker-compose up -d || error_exit "Échec lors du lancement du service Addok"
 
 # addok-[DEPARTEMENT]
 echo ">>> Création du répertoire ./addok-$DEPARTEMENT"
@@ -115,7 +106,7 @@ else
 fi
 cd ..
 
-# Étape 8 : Nettoyer les fichiers temporaires
+# Étape 6 : Nettoyer les fichiers temporaires
 echo ">>> Nettoyage des fichiers temporaires"
 rm -Rf ./addok-$DEPARTEMENT
 rm -Rf ./addok-redis-$DEPARTEMENT
